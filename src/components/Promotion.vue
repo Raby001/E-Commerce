@@ -18,8 +18,8 @@ const pro = defineProps<{
         class="absolute left-10 z-2 w-[50%] h-[55%] flex flex-col items-between justify-center text-[16px] sm:text-[24px] font-bold"
       >
         <div class="h-full flex flex-col items-start justify-between">
-          <h3>{{ p.text }}</h3>
-          <Buttons :text="p.buttonText" :background="p.buttonColor" />
+          <h3>{{ p.title }}</h3>
+          <Buttons :text="p.buttonText" :background="p.buttonColor" :title="p.title" />
         </div>
       </div>
 

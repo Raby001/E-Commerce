@@ -3,7 +3,18 @@ import { ref } from 'vue'
 import Category from './components/Category.vue'
 import Promotion from './components/Promotion.vue'
 
-import type { category, promotion } from '@/types'
+import type { category, navbarCat, promotion } from '@/types'
+import NavbarCategory from './components/NavbarCategory.vue'
+
+const navbarCategories = ref<navbarCat[]>([
+  { bold: true, title: 'All' },
+  { bold: false, title: 'Milks&Diaries' },
+  { bold: false, title: 'Coffees&Teas' },
+  { bold: false, title: 'Pet Foods' },
+  { bold: false, title: 'Meats' },
+  { bold: false, title: 'Vegatables' },
+  { bold: false, title: 'Fruits' },
+])
 
 const categories = ref<category[]>([
   { name: 'Junk Food', number: 14, image: 'images/c1.png', background: 'rgba(242, 252, 228, 1)' },
@@ -20,21 +31,21 @@ const categories = ref<category[]>([
 
 const promotions = ref<promotion[]>([
   {
-    text: 'Everyday Fresh & Clean with Our Products',
+    title: 'Everyday Fresh & Clean with Our Products',
     background: 'rgba(240, 232, 213, 1)',
     image: '/images/p1.jpg',
     buttonColor: 'rgba(59, 183, 126, 1)',
     buttonText: 'Shop now',
   },
   {
-    text: 'Make your Breakfast Healthy & Easy',
+    title: 'Make your Breakfast Healthy & Easy',
     background: 'rgba(243, 232, 232, 1)',
     image: '/images/p2.jpg',
     buttonColor: 'rgba(59, 183, 126, 1)',
     buttonText: 'Shop now',
   },
   {
-    text: 'The Best Organic Products Online',
+    title: 'The Best Organic Products Online',
     background: 'rgba(231, 234, 243, 1)',
     image: '/images/p3.jpg',
     buttonColor: 'rgba(253, 192, 64, 1)',
@@ -44,10 +55,17 @@ const promotions = ref<promotion[]>([
 </script>
 
 <template>
-  <div class="mt-10 font-Quicksand flex flex-col items-center justify-center">
-    <div class="flex flex-row gap-4">
-      <Category :categories="categories" />
+  <div class="font-Quicksand flex flex-col items-center justify-center border">
+    <div class="w-screen sm:w-[1505px]">
+      <div class="">
+        <NavbarCategory :navbar-cat="navbarCategories" />
+      </div>
+      <div class="">
+        <Category :categories="categories" />
+      </div>
+      <div class="">
+        <Promotion :promotion="promotions" />
+      </div>
     </div>
-    <Promotion :promotion="promotions" />
   </div>
 </template>

@@ -6,9 +6,14 @@ export interface category {
 }
 
 export interface promotion {
-  text: string
+  title: string
   background: string
   image: string
   buttonColor: string
   buttonText: string
+}
+
+export interface navbarCat {
+  bold: boolean
+  title: string
 }

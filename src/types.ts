@@ -1,19 +1,15 @@
 export interface category {
-  image: string
-  name: string
-  number: number
-  background: string
+    name: string;
+    productCount: number;
+    color: string;
+    image: string;
+    group?: string;
 }
 
 export interface promotion {
   title: string
-  background: string
-  image: string
   buttonColor: string
-  buttonText: string
-}
-
-export interface navbarCat {
-  bold: boolean
-  title: string
+  color: string
+  image: string
+  url?: string
 }

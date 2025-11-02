@@ -8,10 +8,10 @@ const pro = defineProps<{
 </script>
 
 <template>
-  <div class="flex gap-4 mt-6 flex-row flex-wrap justify-center">
+  <div class="flex gap-4 mt-6 flex-col md:flex-row flex-wrap justify-center items-center">
     <div
       v-for="p in pro.promotion"
-      :style="{ backgroundColor: p.background }"
+      :style="{ backgroundColor: p.color}"
       class="relative w-[350px] h-[230px] sm:w-[490px] sm:h-[300px] rounded-[10px] flex flex-row items-center justify-between"
     >
       <div
@@ -19,7 +19,7 @@ const pro = defineProps<{
       >
         <div class="h-full flex flex-col items-start justify-between">
           <h3>{{ p.title }}</h3>
-          <Buttons :text="p.buttonText" :background="p.buttonColor" :title="p.title" />
+          <Buttons :background="p.buttonColor" :title="p.title" />
         </div>
       </div>
 

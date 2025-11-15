@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import type { promotion } from '@/types'
 import Buttons from './Buttons.vue'
+import { usePromotionStore } from '@/stores/usePromotionStore';
 
-const pro = defineProps<{
-  promotion: promotion[]
-}>()
+const pro = usePromotionStore();
 </script>
 
 <template>
   <div class="flex gap-4 mt-6 flex-col md:flex-row flex-wrap justify-center items-center">
     <div
-      v-for="p in pro.promotion"
+      v-for="p in pro.promotions"
       :style="{ backgroundColor: p.color}"
       class="relative w-[350px] h-[230px] sm:w-[490px] sm:h-[300px] rounded-[10px] flex flex-row items-center justify-between"
     >

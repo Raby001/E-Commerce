@@ -4,6 +4,10 @@ import Category from './components/Category.vue'
 import Promotion from './components/Promotion.vue'
 
 import type { category, promotion } from '@/types'
+import { useCategoryStore } from './stores/useCategoryStore'
+import { usePromotionStore } from './stores/usePromotionStore'
+import Products from './components/Products.vue'
+import { useProductStore } from './stores/useProductStore'
 
 
 // const categories = ref<category[]>([
@@ -40,33 +44,14 @@ import type { category, promotion } from '@/types'
 //   },
 // ])
 
-const categories = ref<category[]>([])
-const promotions = ref<promotion[]>([])
+const categories = useCategoryStore()
+const promotions = usePromotionStore()
+const products = useProductStore()
 
 onMounted(async () => {
-  try {
-    const catRes = await fetch('http://localhost:3000/api/categories')
-    const catData = await catRes.json()
-    categories.value = Array.isArray(catData)
-      ? catData.map(p => ({
-          ...p,
-          image: `http://localhost:3000/${p.image.replaceAll('\\', '/')}` 
-        }))
-      : []
-
-    const promoRes = await fetch('http://localhost:3000/api/promotions')
-    const promoData = await promoRes.json()
-    promotions.value = Array.isArray(promoData) ? promoData : []
-    promotions.value = Array.isArray(promoData)
-      ? promoData.map(p => ({
-          ...p,
-          image: `http://localhost:3000/${p.image.replaceAll('\\', '/')}` 
-        }))
-      : []
-
-  } catch (error) {
-    console.error('Error fetching data:', error)
-  }
+  categories.fetchCategories()
+  promotions.fetchPromotion()
+  products.fetchProducts()
 })
 
 
@@ -76,10 +61,13 @@ onMounted(async () => {
   <div class="font-Quicksand flex flex-col items-center justify-center mt-10">
     <div class="max-w-[1550px]">
       <div class="">
-        <Category :categories="categories" />
+        <Category/>
       </div>
       <div class="">
-        <Promotion :promotion="promotions" />
+        <Promotion/>
+      </div>
+      <div class="">
+        <Products/>
       </div>
     </div>
   </div>

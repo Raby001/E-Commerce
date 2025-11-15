@@ -13,3 +13,17 @@ export interface promotion {
   image: string
   url?: string
 }
+
+export interface product {
+    name: string;
+    rating: string;
+    size: string;
+    image: string;
+    price: number;
+    promtionAsPerentage?: number;
+    categoryId: string;
+    instock: number;
+    countSold: number;
+    group?: string;
+}
+

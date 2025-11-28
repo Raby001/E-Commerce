@@ -13,15 +13,12 @@ export const useProductStore = defineStore('product', () => {
   const currentFilterCategory = ref('All')
   const categories = ref<string[]>([
     'All',
-    'Fruits',
-    'Vegetables',
-    'Meats',
     'Milks & Diaries',
     'Coffees & Teas',
     'Pet Foods',
-    'Frozen Foods',
-    'Bakery',
-    'Snacks'
+    'Meats',
+    'Vegetables',
+    'Fruits',
   ])
 
   function calculatePrice(price: number, discount?: number): number {

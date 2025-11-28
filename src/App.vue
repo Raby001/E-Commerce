@@ -1,74 +1,73 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import Category from './components/Category.vue'
-import Promotion from './components/Promotion.vue'
+import { onMounted } from 'vue'
 
-import type { category, promotion } from '@/types'
-import { useCategoryStore } from './stores/useCategoryStore'
-import { usePromotionStore } from './stores/usePromotionStore'
-import Products from './components/Products.vue'
-import { useProductStore } from './stores/useProductStore'
+// Components
+import Category from '@/components/Category.vue'
+import Promotion from '@/components/Promotion.vue'
+import Products from '@/components/Products.vue'
+import CategoryFilterTabs from '@/components/CategoryFilterTabs.vue'  // ← our new reusable filter
 
+// Stores
+import { useProductStore } from '@/stores/useProductStore'
+import { useContentStore } from '@/stores/useContentStore'
 
-// const categories = ref<category[]>([
-//   { name: 'Junk Food', productCount: 14, image: 'images/c1.png', color: 'rgba(242, 252, 228, 1)' },
-//   { name: 'Peach', productCount: 17, image: 'images/c2.png', color: 'rgba(255, 252, 235, 1)' },
-//   { name: 'Oganic Kiwi', productCount: 21, image: 'images/c3.png', color: 'rgba(236, 255, 236, 1)' },
-//   { name: 'Red Apple', productCount: 68, image: 'images/c4.png', color: 'rgba(254, 239, 234, 1)' },
-//   { name: 'Snack', productCount: 34, image: 'images/c5.png', color: 'rgba(255, 243, 235, 1)' },
-//   { name: 'Black plum', productCount: 25, image: 'images/c6.png', color: 'rgba(255, 243, 255, 1)' },
-//   { name: 'Vegatables', productCount: 65, image: 'images/c7.png', color: 'rgba(242, 252, 228, 1)' },
-//   { name: 'Headphone', productCount: 33, image: 'images/c8.png', color: 'rgba(255, 252, 235, 1)' },
-//   { name: 'Cake & Milk', productCount: 54, image: 'images/c9.png', color: 'rgba(242, 252, 228, 1)' },
-//   { name: 'Orange', productCount: 63, image: 'images/c10.png', color: 'rgba(255, 243, 255, 1)' },
-// ])
-
-// const promotions = ref<promotion[]>([
-//   {
-//     title: 'Everyday Fresh & Clean with Our Products',
-//     color: 'rgba(240, 232, 213, 1)',
-//     image: '/images/p1.jpg',
-//     buttonColor: 'rgba(59, 183, 126, 1)',
-//   },
-//   {
-//     title: 'Make your Breakfast Healthy & Easy',
-//     color: 'rgba(243, 232, 232, 1)',
-//     image: '/images/p2.jpg',
-//     buttonColor: 'rgba(59, 183, 126, 1)',
-//   },
-//   {
-//     title: 'The Best Organic Products Online',
-//     color: 'rgba(231, 234, 243, 1)',
-//     image: '/images/p3.jpg',
-//     buttonColor: 'rgba(253, 192, 64, 1)',
-//   },
-// ])
-
-const categories = useCategoryStore()
-const promotions = usePromotionStore()
-const products = useProductStore()
+const productStore = useProductStore()
+const contentStore = useContentStore()
 
 onMounted(async () => {
-  categories.fetchCategories()
-  promotions.fetchPromotion()
-  products.fetchProducts()
+  await Promise.all([
+    contentStore.fetchFeaturedCategories(),
+    contentStore.fetchPromotions(),   // ← gets real category names
+    productStore.fetchProducts()
+  ])
 })
-
-
 </script>
 
 <template>
-  <div class="font-Quicksand flex flex-col items-center justify-center mt-10">
-    <div class="max-w-[1550px]">
-      <div class="">
-        <Category/>
-      </div>
-      <div class="">
-        <Promotion/>
-      </div>
-      <div class="">
-        <Products/>
-      </div>
+  <div class="font-Quicksand min-h-screen bg-gray-50 py-10">
+    <div class="max-w-[1550px] mx-auto px-4">
+
+      <!-- ==================== Featured Categories Section ==================== -->
+      <section class="">
+        <div class="flex flex-row items-center justify-between ">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Featured Categories
+          </h2>
+
+          <!-- First Filter Bar (above categories) -->
+          <div class="flex justify-center mb-8">
+            <CategoryFilterTabs />
+          </div>          
+        </div>
+
+
+        <!-- Category Grid -->
+        <Category />
+      </section>
+
+      <!-- ==================== Promotions ==================== -->
+      <section class="mb-16">
+        <Promotion />
+      </section>
+
+      <!-- ==================== Popular Products Section ==================== -->
+      <section>
+        <div class="flex flex-row items-center justify-between">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Popular Products
+          </h2>
+
+          <!-- Second Filter Bar (above products) -->
+          <div class="flex justify-center mb-8">
+            <CategoryFilterTabs />
+          </div>          
+        </div>
+
+
+        <!-- Products Grid – automatically filtered by the store! -->
+        <Products :products="productStore.filteredProducts" />
+      </section>
+
     </div>
   </div>
 </template>

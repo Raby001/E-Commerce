@@ -20,10 +20,10 @@ export interface product {
     size: string;
     image: string;
     price: number;
-    promtionAsPerentage?: number;
+    promotionAsPercentage?: number;
     categoryId: string;
     instock: number;
     countSold: number;
     group?: string;
+    finalPrice: number;
 }
-

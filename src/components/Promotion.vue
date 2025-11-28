@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import Buttons from './Buttons.vue'
-import { usePromotionStore } from '@/stores/usePromotionStore';
+import {useContentStore} from '../stores/useContentStore';
+import { storeToRefs } from 'pinia';
 
-const pro = usePromotionStore();
+const content = useContentStore();
+
+const {promotions} = storeToRefs(content);
+
 </script>
 
 <template>
   <div class="flex gap-4 mt-6 flex-col md:flex-row flex-wrap justify-center items-center">
     <div
-      v-for="p in pro.promotions"
+      v-for="p in promotions"
       :style="{ backgroundColor: p.color}"
       class="relative w-[350px] h-[230px] sm:w-[490px] sm:h-[300px] rounded-[10px] flex flex-row items-center justify-between"
     >

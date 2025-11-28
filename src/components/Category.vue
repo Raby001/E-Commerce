@@ -1,30 +1,26 @@
-<script lang="ts" setup>
-import { useCategoryStore } from '@/stores/useCategoryStore';
-import { Menu } from 'lucide-vue-next';
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useProductStore } from '@/stores/useProductStore'
+import { useContentStore } from '@/stores/useContentStore'
 
-const cat = useCategoryStore()
+const productStore = useProductStore()
+const contentStore = useContentStore()
+
+// Compute which category card(s) to show
+const filteredCategories = computed(() => {
+  if (productStore.currentFilterCategory === 'All') {
+    return contentStore.featuredCategories
+  }
+  return contentStore.featuredCategories.filter(
+    cat => cat.name === productStore.currentFilterCategory
+  )
+})
 </script>
 
 <template>
-  <!-- <div class="flex flex-row text-[rgba(37,61,78,1)] justify-between mb-10 items-center px-10 md:px-0">
-    <div class="text-[24px] font-bold md:text-[32px]">Featured Categories</div>
-    <div class="hidden md:block">
-      <ul class="flex flex-row justify-center gap-10">
-        <li 
-        v-for="c in cat.categoriesNavbar" 
-        @click="cat.selectedCategories(c)" 
-        :class="cat.activeCategoriesNavbar === c ? 'font-bold': 'font-normal'" 
-        class="cursor-pointer transition-colors duration-300"
-        >{{ c }}</li>
-      </ul>
-    </div>
-    <div class="block md:hidden">
-      <Menu />
-    </div>
-  </div> -->
   <div class="flex gap-4 flex-wrap justify-center">
     <div
-      v-for="c in cat.categories"
+      v-for="c in filteredCategories"
       class="flex flex-col items-center rounded-[10px] w-[136px] h-[177px]"
       :style="{ backgroundColor: c.color }"
     >
@@ -32,5 +28,13 @@ const cat = useCategoryStore()
       <div class="font-semibold text-[16px]">{{ c.name }}</div>
       <div class="text-[12px] text-gray-400">{{ c.productCount }} items</div>
     </div>
+  </div>
+
+  <!-- Optional: nice message when only one category is shown -->
+  <div
+    v-if="productStore.currentFilterCategory !== 'All' && filteredCategories.length === 0"
+    class="text-center py-12 text-gray-500 col-span-full"
+  >
+    No featured category for "{{ productStore.currentFilterCategory }}"
   </div>
 </template>

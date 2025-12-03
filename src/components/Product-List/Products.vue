@@ -32,11 +32,11 @@ const decrement = (index: number) => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-10 flex-wrap">
-    <div v-for="(pro, index) in products" :key="index" class="h-[400px] w-[300px] border-2 border-gray-200 hover:border-green-300 rounded-[10px]">
-      <div class="flex justify-center mt-10">
+  <div class="flex flex-row gap-4 flex-wrap">
+    <div v-for="(pro, index) in products" :key="index" class="h-[400px] w-[290px] border-2 border-gray-200 hover:border-green-300 rounded-[10px]">
+      <router-link :to="{name: 'product', params: {productId: 'pro.id'}}" class="flex justify-center mt-10">
         <img class="h-[150px]" :src="pro.image" alt="">
-      </div>
+      </router-link>
       
       <div class="flex flex-col gap-2 mx-5">
         <p class="text-[16px] text-gray-600 ">Hodo Foods</p>
@@ -45,8 +45,8 @@ const decrement = (index: number) => {
         <div class="text-[16px] text-gray-600">{{ pro.size }}</div>
         <div class="flex flex-row justify-between items-center">
           <div class="flex flex-row gap-3 items-center">
-            <p class="text-[24px] font-bold text-green-500">${{ pro.price }}</p>
-            <p class="text-[16px] line-through">${{ pro.finalPrice }}</p>
+            <p class="text-[24px] font-bold text-green-500">${{ pro.finalPrice }}</p>
+            <p class="text-[16px] line-through">${{ pro.price }}</p>
           </div>
 
           <!-- Add / Counter -->

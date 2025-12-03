@@ -4,12 +4,13 @@ import { onMounted } from 'vue'
 // Components
 import Category from '@/components/Category.vue'
 import Promotion from '@/components/Promotion.vue'
-import Products from '@/components/Products.vue'
+import Products from '@/components/Product-List/Products.vue'
 import CategoryFilterTabs from '@/components/CategoryFilterTabs.vue'  // ← our new reusable filter
 
 // Stores
 import { useProductStore } from '@/stores/useProductStore'
 import { useContentStore } from '@/stores/useContentStore'
+import Banner from '@/components/Navbar/Banner.vue'
 
 const productStore = useProductStore()
 const contentStore = useContentStore()
@@ -25,7 +26,11 @@ onMounted(async () => {
 
 <template>
   <div class="font-Quicksand min-h-screen bg-gray-50 py-10">
-    <div class="max-w-[1550px] mx-auto px-4">
+    <div class="max-w-[1600px] mx-auto">
+
+      <div class="mt-5 mb-10">
+        <Banner/>
+      </div>
 
       <!-- ==================== Featured Categories Section ==================== -->
       <section class="">
@@ -37,13 +42,14 @@ onMounted(async () => {
           <!-- First Filter Bar (above categories) -->
           <div class="flex justify-center mb-8">
             <CategoryFilterTabs />
-          </div>          
+          </div>           
         </div>
 
 
         <!-- Category Grid -->
         <Category />
       </section>
+
 
       <!-- ==================== Promotions ==================== -->
       <section class="mb-16">

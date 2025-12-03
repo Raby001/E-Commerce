@@ -1,23 +1,19 @@
-<script lang="ts">
-import SearchBox from '@/components/SearchBox.vue';
-import RightPart from '@/components/RightPart.vue';
-import BelowNav from '@/components/BelowNav.vue';
+<script lang="ts" setup>
+import SearchBox from './SearchBox.vue'
+import BelowNav from './BelowNav.vue';
+import RightPart from './RightPart.vue';
 
-export default {
-    name: "NavBar"
-}
 </script>
-
 <template>
     <nav class="flex flex-col gap-10">
         <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-row">
+            <router-link :to="{name: 'Home'}" class="flex flex-row">
                 <img src="/images/Logo.png" alt="Melon Mart Logo" class="h-12" />
                 <div class="">
                     <p class="font-bold text-[24px] text-green-600">Melon</p>
                     <p class="text-[14px]">Mart & GROCERY</p>
                 </div>
-            </div>
+            </router-link>
             <div class="">
                 <SearchBox/>
             </div>

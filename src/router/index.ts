@@ -8,12 +8,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView,
     },
     {
       path: '/categories/:categoryId',
-      name: 'about',
+      name: 'category',
       component: CategoryView,
     },
     {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/Navbar/Navbar.vue'
+import PageFooter from '@/components/Footer/PageFooter.vue'
 </script>
 
 <template>
@@ -11,5 +12,6 @@ import Navbar from '@/components/Navbar.vue'
 
 
     </div>
+      <PageFooter/>
   </div>
 </template>

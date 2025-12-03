@@ -1,6 +1,6 @@
 <!-- src/components/CategoryNav.vue -->
 <template>
-  <div class="shadow-sm border-b">
+  <div class="border-y border-gray-300">
     <div class="">
       <div class="flex items-center justify-between h-14">
 
@@ -16,10 +16,13 @@
 
           <!-- Category Links -->
           <nav class="hidden md:flex items-center ml-10 space-x-8">
-            <a href="#" class="flex items-center gap-1 text-red-600 font-medium">
+            <router-link
+              :to="{ name: 'category', params: { categoryId: 'hot-deals' } }"
+              class="flex items-center gap-1 text-red-600 font-medium hover:text-green-600 transition"
+            >
               <Flame class="w-5 h-5" />
               Hot Deals
-            </a>
+            </router-link>
             <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition">Home</a>
             <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition">Food</a>
             <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition">Vegetables</a>

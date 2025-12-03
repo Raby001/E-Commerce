@@ -17,7 +17,7 @@ const emitSearch = () => {
 
 
 <template>
-  <div class="flex items-center w-full max-w-3xl mx-auto border border-green-300  rounded-lg overflow-hidden shadow-sm hover:shadow-md focus-within:ring-2">
+  <div class="flex items-center w-[700px] mx-auto border border-green-300  rounded-lg overflow-hidden shadow-sm hover:shadow-md focus-within:ring-2">
     <!-- Category Dropdown -->
     <div class="relative">
       <select
@@ -56,7 +56,7 @@ const emitSearch = () => {
     <!-- Search Button -->
     <button
       @click="emitSearch"
-      class="bg-green-400  hover:bg-cyan-600 px-7 py-4 text-white transition-colors"
+      class="bg-green-400 px-7 py-4 text-white transition-colors"
     >
       <!-- Lucide Search Icon -->
       <Search class="w-6 h-6" />

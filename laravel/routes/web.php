@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,4 +18,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/admin', function () {
+    return 'Admin dashboard';
+})->middleware('role:admin');
+
+Route::get('/products/create', function () {
+    return 'Create product';
+})->middleware('permission:products.create');
+
+Route::get('/users', function () {
+    abort_unless(auth()->user()->can('users.manage'), 403);
+    return User::all();
+});
 require __DIR__.'/auth.php';

@@ -63,4 +63,18 @@ class CategoryController extends Controller
     }
 
 
+    public function show(Category $category)
+    {
+        $this->authorize('view', $category); // checks if the user can view this category
+        return view('categories.show', compact('category'));
+    }
+
+    public function updateStatus(Category $category)
+    {
+        $this->authorize('updateStatus', $category); // checks if user can update
+        $category->status = 'completed';
+        $category->save();
+        return redirect()->back();
+    }
+
 }

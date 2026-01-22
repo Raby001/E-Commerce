@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Article extends Model
 {
-    protected $fillable = ['author_id', 'title'];
+    protected $fillable = ['author_id', 'name'];
 
     // Article belongs to an author
     public function author(): BelongsTo

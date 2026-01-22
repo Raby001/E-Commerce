@@ -5,6 +5,31 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\CategoryController;
 use \App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AudienceController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\CommentController;
+
+// Create resources (POST)
+Route::post('/authors', [AuthorController::class, 'store']);
+Route::post('/articles', [ArticleController::class, 'store']);
+Route::post('/audiences', [AudienceController::class, 'store']);
+Route::post('/subscriptions', [SubscriptionController::class, 'store']);
+Route::middleware('auth:api')->group(function () {
+    Route::post('/comments', [CommentController::class, 'store']);
+});
+
+Route::get('/comments', [CommentController::class, 'index']);
+
+
+// Get data (GET)
+Route::get('/authors/{author}/articles', [AuthorController::class, 'articles']);
+Route::get('/articles/{article}/audiences', [ArticleController::class, 'audiences']);
+Route::get('/authors/{author}/audiences', [AuthorController::class, 'audiences']);
+Route::get('/audiences/{audience}/comments', [AudienceController::class, 'comments']);
+Route::get('/comments', [CommentController::class, 'index']);
+
 
 // Category Routes
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {

@@ -13,7 +13,7 @@ use App\Models\Comment;
 
 class Audience extends Model
 {
-    protected $fillable = ['user_id'];
+    protected $fillable = ['name', 'user_id'];
 
     // Audience belongs to user
     public function user(): BelongsTo

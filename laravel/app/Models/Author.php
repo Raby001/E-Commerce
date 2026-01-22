@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Author extends Model
 {
-    protected $fillable = ['user_id'];
+    protected $fillable = ['name', 'user_id'];
 
     // Author belongs to user
     public function user(): BelongsTo
@@ -30,10 +30,15 @@ class Author extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
-    // Author has many audiences through articles
-    public function audiences(): HasManyThrough
+    // All audiences across all author's articles (many-to-many via pivot)
+    public function audiences()
     {
-        return $this->hasManyThrough(Audience::class, Article::class);
+        return $this->articles()->with('audiences')
+            ->get()
+            ->pluck('audiences') 
+            ->flatten() 
+            ->unique('id')
+            ->values();
     }
 }
 

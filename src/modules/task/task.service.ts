@@ -11,6 +11,10 @@ export class TaskService {
     const task = this.tasksRepo.create(taskData);
     return this.tasksRepo.save(task);
   }
+  
+  getAllTasks() {
+    return this.tasksRepo.find();
+  }
 
   getTask(id: number){
     return this.tasksRepo.findOne({ where: {id}, relations: ['user']});

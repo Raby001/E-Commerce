@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { ReceiptModule } from './receipts/receipts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { NotificationsModule } from './notifications/notifications.module';
+import { OrdersModule } from './orders/orders.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
   imports: [
-    ReceiptModule,
     ConfigModule.forRoot({
       isGlobal: true
     }),
@@ -18,7 +20,11 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DB_NAME,
       autoLoadEntities:true,
       synchronize: true
-    }),  
+    }),
+    ReceiptModule,
+    NotificationsModule,
+    OrdersModule,
+    CoreModule,  
 
   ],
   controllers: [],

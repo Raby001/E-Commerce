@@ -1,14 +1,18 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { ReceiptsEntity } from "./database/entities/Receipt.entity";
 import { CreateReceiptsDto } from "./dto/create-receipt.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdateReceiptDto } from "./dto/update-receipt.dto";
+import { NotificationsService } from "src/notifications/notifications.service";
 
 
 @Injectable()
 export class ReceiptsService{
-    constructor(@InjectRepository(ReceiptsEntity) private readonly receiptsRepo: Repository<ReceiptsEntity>){}
+    constructor(
+        @InjectRepository(ReceiptsEntity) private readonly receiptsRepo: Repository<ReceiptsEntity>,
+        private readonly notifications: NotificationsService,
+    ){}
 
     async findAll(){
         return this.receiptsRepo.find({order:{
@@ -24,13 +28,21 @@ export class ReceiptsService{
         return receipt;
     }
     
-    create(dto: CreateReceiptsDto){
+    async create(dto: CreateReceiptsDto){
         const createReceipt = this.receiptsRepo.create({
             issuedAt: new Date(dto.issuedAt),
             name: dto.name,
             price: dto.price
         })
-        return this.receiptsRepo.save(createReceipt);
+
+        const saved = await this.receiptsRepo.save(createReceipt);
+
+        this.notifications.notify('receipt_created',{
+            receiptId: saved.receiptId,
+            price: saved.price,
+        })
+
+        return saved;
     }
 
     async updateReceipt(Id: string, dto: UpdateReceiptDto){

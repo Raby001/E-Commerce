@@ -8,10 +8,11 @@ type EventPublisher = { publish: (event: string, payload: any) => void };
 export class NotificationsService {
     constructor(
         @Inject(EVENT_PUBLISHER)
-        private readonly orderService: OrdersService
+        private readonly publisher: EventPublisher
     ){}
-    notify(event: string, payload: any){
-        console.log(`[NOTIFY] ${event}`, payload);
-        return {ok: true};
+
+    notify(event: string, payload: any) {
+        this.publisher.publish(event, payload);
+        return { ok: true };
     }
 }
